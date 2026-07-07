@@ -33,3 +33,7 @@ See the individual READMEs for detailed setup instructions:
 - [Frontend README](./frontend/README.md)
 - [Backend README](./backend/README.md)
 - [API Documentation](./API.md)
+
+## Developer
+Developed by **SHAH RIYA KALPESH**  
+Email: [rs.dec.0000@gmail.com](mailto:rs.dec.0000@gmail.com)

@@ -17,12 +17,16 @@
     --brand-bg: #EBE5D9;
     --brand-primary: #D4C4B7;
     --brand-accent: #FFF3D8;
-    --brand-card: rgba(235, 229, 217, 0.6);
-    --brand-border: rgba(255, 243, 216, 0.5);
+    --brand-card: rgba(250, 248, 244, 0.65); /* Slightly lighter than bg to stand out */
+    --brand-border: rgba(255, 243, 216, 0.6);
     --brand-text: #3D352F;
     --brand-secondary: #7A6A5E;
     --shadow-light: rgba(255,255,255,0.7);
     --shadow-dark: rgba(0,0,0,0.06);
+    
+    /* Stronger, warmer shadow for light mode */
+    --card-shadow: rgba(90, 75, 60, 0.15);
+    --card-inset: rgba(255, 255, 255, 0.6);
   }
   
   .dark {
@@ -35,6 +39,10 @@
     --brand-secondary: #9E8C7F;
     --shadow-light: rgba(60, 55, 51, 0.5);
     --shadow-dark: rgba(0,0,0,0.4);
+    
+    /* Keep original shadow for dark mode */
+    --card-shadow: rgba(0,0,0,0.05);
+    --card-inset: rgba(255,255,255,0.2);
   }
   
   body {
@@ -66,8 +74,8 @@
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--color-brand-border);
     box-shadow: 
-      0 20px 40px -20px rgba(0,0,0,0.05),
-      0 0 10px rgba(255,255,255,0.2) inset;
+      0 20px 40px -20px var(--card-shadow),
+      0 0 10px var(--card-inset) inset;
   }
   
   .glass-input {
