@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-brand-bg: #F7F8FC;
-  --color-brand-primary: #6366F1;
-  --color-brand-accent: #8B5CF6;
-  --color-brand-card: rgba(255, 255, 255, 0.75);
-  --color-brand-border: rgba(255, 255, 255, 0.45);
-  --color-brand-text: #0F172A; /* Deeper for better contrast */
-  --color-brand-secondary: #475569; /* Clearer for better contrast */
+  --color-brand-bg: #EBE5D9;
+  --color-brand-primary: #D4C4B7;
+  --color-brand-accent: #FFF3D8;
+  --color-brand-card: rgba(235, 229, 217, 0.6);
+  --color-brand-border: rgba(255, 243, 216, 0.5);
+  --color-brand-text: #3D352F;
+  --color-brand-secondary: #7A6A5E;
   --color-brand-success: #10B981;
   --color-brand-warning: #F59E0B;
   --color-brand-danger: #EF4444;
@@ -18,10 +19,22 @@
   body {
     background-color: var(--color-brand-bg);
     color: var(--color-brand-text);
-    font-family: 'Outfit', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     margin: 0;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
+    transition: background-color 0.8s ease;
+  }
+  
+  .font-elegant {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+  }
+  
+  body.app-glow-active .ambient-light {
+    opacity: 0.8 !important;
+    transform: scale(1.4) !important;
+    filter: blur(100px) !important;
   }
 }
 
@@ -41,5 +54,24 @@
     backdrop-filter: blur(12px);
     border: 1px solid var(--color-brand-border);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) inset;
+  }
+
+  .eclipse-input {
+    background-color: var(--color-brand-bg);
+    border: none;
+    box-shadow: 
+      -8px -8px 16px rgba(255,255,255,0.7), 
+      8px 8px 16px rgba(0,0,0,0.06),
+      0 0 0 rgba(232, 197, 154, 0);
+    transition: box-shadow 0.7s ease, transform 0.7s ease;
+  }
+
+  .eclipse-input:hover,
+  .eclipse-input:focus {
+    box-shadow: 
+      -8px -8px 16px rgba(255,255,255,0.7), 
+      8px 8px 16px rgba(0,0,0,0.06),
+      0 0 30px 5px rgba(232, 197, 154, 0.4);
+    outline: none;
   }
 }

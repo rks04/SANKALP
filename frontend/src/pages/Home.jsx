@@ -32,8 +32,8 @@ export default function Home() {
       className="flex-1 flex flex-col items-center justify-center max-w-3xl mx-auto w-full"
     >
       <div className="text-center mb-10">
-        <h2 className="text-4xl font-semibold text-[var(--color-brand-text)] mb-3 tracking-tight">Turn meeting notes into structured project tasks.</h2>
-        <p className="text-[var(--color-brand-secondary)] text-lg">AI extracts tasks, owners, priorities and deadlines automatically.</p>
+        <h2 className="text-3xl sm:text-4xl font-elegant uppercase text-[var(--color-brand-text)] mb-3 tracking-wider">STRUCTURE THE CHAOS.</h2>
+        <p className="text-[var(--color-brand-secondary)] text-lg">Capture. Organize. Execute.</p>
       </div>
 
       <MeetingInput onGenerate={handleGenerate} isGenerating={isGenerating} />

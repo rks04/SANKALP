@@ -102,7 +102,7 @@ export default function Tasks() {
           <button 
             onClick={handleExportCSV}
             disabled={tasks.length === 0}
-            className="flex items-center gap-2 bg-[var(--color-brand-primary)] text-white hover:bg-[#5356E5] transition-colors px-4 py-2 rounded-lg text-sm font-medium shadow-sm disabled:opacity-50"
+            className="flex items-center gap-2 bg-[var(--color-brand-text)] text-white hover:opacity-90 transition-all px-4 py-2 rounded-lg text-sm font-medium shadow-sm disabled:opacity-50"
           >
             <Download size={16} />
             <span>Export CSV</span>

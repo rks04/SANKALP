@@ -18,7 +18,7 @@ export default function FilterBar({
       {active && (
         <motion.div
           layoutId={`activePillBg-${children}`}
-          className="absolute inset-0 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-accent)] rounded-full shadow-md shadow-[var(--color-brand-primary)]/20"
+          className="absolute inset-0 bg-[var(--color-brand-text)] rounded-full shadow-md"
           transition={{ type: "spring", stiffness: 400, damping: 30 }}
         />
       )}
@@ -28,7 +28,7 @@ export default function FilterBar({
 
   return (
     <div className="flex flex-col gap-6 py-2">
-      <div className="flex flex-wrap items-center gap-x-12 gap-y-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 w-full p-4 glass-card rounded-2xl">
         
         {/* Status Filter */}
         <div className="flex flex-col gap-2">

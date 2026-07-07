@@ -32,7 +32,7 @@ export default function LoadingOverlay() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(247,248,252,0.8)] backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#EBE5D9]/80 backdrop-blur-sm"
     >
       <div className="glass-card rounded-2xl p-8 w-full max-w-md mx-4 shadow-xl flex flex-col">
         <h3 className="text-xl font-semibold text-[var(--color-brand-text)] mb-6 text-center">Analyzing Meeting Notes...</h3>
@@ -53,7 +53,7 @@ export default function LoadingOverlay() {
               >
                 {isCompleted ? (
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                    <CheckCircle2 className="text-[var(--color-brand-success)]" size={20} />
+                    <CheckCircle2 className="text-[var(--color-brand-text)]" size={20} />
                   </motion.div>
                 ) : isCurrent ? (
                   <Loader2 className="text-[var(--color-brand-primary)] animate-spin" size={20} />

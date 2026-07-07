@@ -5,9 +5,9 @@ export default function TaskCard({ task, index, onToggleStatus, onEdit, onDelete
   const isCompleted = task.status === 'Completed';
 
   const priorityStyles = {
-    High: { dot: 'bg-[var(--color-brand-danger)]', text: 'text-[var(--color-brand-danger)]', bg: 'bg-[var(--color-brand-danger)]/10' },
-    Medium: { dot: 'bg-[var(--color-brand-warning)]', text: 'text-[var(--color-brand-warning)]', bg: 'bg-[var(--color-brand-warning)]/10' },
-    Low: { dot: 'bg-[var(--color-brand-success)]', text: 'text-[var(--color-brand-success)]', bg: 'bg-[var(--color-brand-success)]/10' },
+    High: { dot: 'bg-[#4A3B32]', text: 'text-[#4A3B32]', bg: 'bg-[#4A3B32]/10' },
+    Medium: { dot: 'bg-[#8B7355]', text: 'text-[#8B7355]', bg: 'bg-[#8B7355]/10' },
+    Low: { dot: 'bg-[#B09983]', text: 'text-[#B09983]', bg: 'bg-[#B09983]/10' },
   };
 
   const pStyle = priorityStyles[task.priority] || priorityStyles.Medium;
@@ -21,7 +21,7 @@ export default function TaskCard({ task, index, onToggleStatus, onEdit, onDelete
       transition={{ duration: 0.4, delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }}
       whileHover={{ y: -4, boxShadow: '0 20px 40px -15px rgba(0,0,0,0.08)' }}
       className={`glass-card rounded-2xl p-6 flex flex-col gap-5 relative overflow-hidden transition-all duration-300 group ${
-        isCompleted ? 'opacity-50 grayscale-[0.5]' : ''
+        isCompleted ? 'bg-[var(--color-brand-accent)]/40' : ''
       }`}
     >
       {/* Top row: Priority and Actions */}
@@ -57,10 +57,10 @@ export default function TaskCard({ task, index, onToggleStatus, onEdit, onDelete
         >
           {isCompleted ? (
             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 400 }}>
-              <CheckCircle2 className="text-[var(--color-brand-success)]" size={22} />
+              <CheckCircle2 className="text-[var(--color-brand-text)]" size={22} />
             </motion.div>
           ) : (
-            <div className="w-5 h-5 rounded-full border-2 border-[var(--color-brand-secondary)]/40 hover:border-[var(--color-brand-success)] hover:bg-[var(--color-brand-success)]/10 transition-colors"></div>
+            <div className="w-5 h-5 rounded-full border-2 border-[var(--color-brand-secondary)]/40 hover:border-[#8B7355] hover:bg-[#8B7355]/10 transition-colors"></div>
           )}
         </button>
         

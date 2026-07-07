@@ -11,6 +11,9 @@ export default function MeetingInput({ onGenerate, isGenerating }) {
     onGenerate(notes);
   };
 
+  const handleInteractionStart = () => document.body.classList.add('app-glow-active');
+  const handleInteractionEnd = () => document.body.classList.remove('app-glow-active');
+
   return (
     <motion.div 
       className="w-full glass-card rounded-2xl p-6 sm:p-8 relative"
@@ -22,14 +25,19 @@ export default function MeetingInput({ onGenerate, isGenerating }) {
           <label htmlFor="notes" className="text-sm font-semibold text-[var(--color-brand-text)] flex items-center gap-2">
             Paste Meeting Notes
           </label>
-          <div className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-accent)] rounded-xl opacity-0 group-focus-within:opacity-20 transition duration-500 blur"></div>
+          <div 
+            className="relative"
+            onMouseEnter={handleInteractionStart}
+            onMouseLeave={handleInteractionEnd}
+            onFocusCapture={handleInteractionStart}
+            onBlurCapture={handleInteractionEnd}
+          >
             <textarea
               id="notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="e.g. Riya will complete the login UI by Friday. Jay will integrate authentication..."
-              className="w-full h-48 sm:h-64 glass-input rounded-xl p-4 text-base focus:outline-none focus:ring-1 focus:ring-[var(--color-brand-primary)] resize-none relative z-10 placeholder:text-[var(--color-brand-secondary)]/50 transition-all text-[var(--color-brand-text)]"
+              className="w-full h-48 sm:h-64 eclipse-input rounded-3xl p-6 text-base resize-none relative z-10 placeholder:text-[var(--color-brand-secondary)]/50 text-[var(--color-brand-text)]"
               disabled={isGenerating}
             />
           </div>
@@ -38,7 +46,7 @@ export default function MeetingInput({ onGenerate, isGenerating }) {
         <button
           type="submit"
           disabled={!notes.trim() || isGenerating}
-          className="self-end bg-[var(--color-brand-primary)] hover:bg-[#5356E5] text-white px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 shadow-md shadow-[var(--color-brand-primary)]/20"
+          className="self-end bg-[var(--color-brand-text)] hover:opacity-90 text-white px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 shadow-md"
         >
           {isGenerating ? (
             <>
