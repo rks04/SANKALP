@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Download, Plus, Loader2 } from 'lucide-react';
+import { Download, Plus, Loader2, LayoutGrid, List } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TaskCard from '../components/TaskCard';
+import KanbanBoard from '../components/KanbanBoard';
 import FilterBar from '../components/FilterBar';
+import KanbanFilterBar from '../components/KanbanFilterBar';
 import EmptyState from '../components/EmptyState';
 import EditModal from '../components/EditModal';
 import { getTasks, updateTask, deleteTask, exportToCSV } from '../services/api';
@@ -13,21 +15,25 @@ export default function Tasks() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [viewMode, setViewMode] = useState('list');
   
   const [filterOwner, setFilterOwner] = useState('All');
   const [filterPriority, setFilterPriority] = useState('All');
   const [filterStatus, setFilterStatus] = useState('All');
   
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterDate, setFilterDate] = useState('');
+  
   const [editingTask, setEditingTask] = useState(null);
 
   useEffect(() => {
     fetchTasks();
-  }, [page]);
+  }, [page, viewMode]);
 
   const fetchTasks = async () => {
     setLoading(true);
     try {
-      const data = await getTasks(page, 10);
+      const data = await getTasks(page, viewMode === 'kanban' ? 50 : 10);
       setTasks(data.items || []);
       setTotalPages(data.total_pages || 1);
     } catch (err) {
@@ -41,11 +47,21 @@ export default function Tasks() {
   const owners = ['All', ...new Set(tasks.map(t => t.owner).filter(Boolean))];
 
   // Filtering logic
-  const filteredTasks = tasks.filter(t => {
-    const matchOwner = filterOwner === 'All' || t.owner === filterOwner;
-    const matchPriority = filterPriority === 'All' || t.priority === filterPriority;
-    const matchStatus = filterStatus === 'All' || t.status === filterStatus;
-    return matchOwner && matchPriority && matchStatus;
+  let filteredTasks = tasks.filter(task => {
+    let match = true;
+    if (filterOwner !== 'All' && task.owner !== filterOwner) match = false;
+    if (filterPriority !== 'All' && task.priority !== filterPriority) match = false;
+    if (filterStatus !== 'All' && task.status !== filterStatus) match = false;
+    
+    if (searchQuery && !task.task.toLowerCase().includes(searchQuery.toLowerCase())) match = false;
+    
+    const taskDateStr = task.due_date || task.deadline;
+    if (filterDate && taskDateStr) {
+      const taskDate = new Date(taskDateStr).toISOString().split('T')[0];
+      if (taskDate !== filterDate) match = false;
+    }
+
+    return match;
   });
 
   const handleExportCSV = () => {
@@ -99,14 +115,31 @@ export default function Tasks() {
         <h2 className="text-2xl font-semibold text-[var(--color-brand-text)]">Task Manager</h2>
         
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          <Link to="/" className="flex items-center gap-2 bg-white/50 backdrop-blur-sm border border-[var(--color-brand-border)] hover:bg-white/80 transition-colors px-4 py-2 rounded-lg text-sm font-medium text-[var(--color-brand-text)]">
+          <div className="flex bg-[var(--color-brand-card)] p-1 rounded-lg border border-[var(--color-brand-border)]">
+            <button 
+              onClick={() => { setViewMode('list'); setPage(1); }}
+              className={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-[var(--color-brand-text)] text-[var(--color-brand-bg)] shadow-sm' : 'text-[var(--color-brand-secondary)] hover:text-[var(--color-brand-text)]'}`}
+              title="List View"
+            >
+              <List size={16} />
+            </button>
+            <button 
+              onClick={() => { setViewMode('kanban'); setPage(1); }}
+              className={`p-1.5 rounded-md transition-colors ${viewMode === 'kanban' ? 'bg-[var(--color-brand-text)] text-[var(--color-brand-bg)] shadow-sm' : 'text-[var(--color-brand-secondary)] hover:text-[var(--color-brand-text)]'}`}
+              title="Kanban Board View"
+            >
+              <LayoutGrid size={16} />
+            </button>
+          </div>
+
+          <Link to="/" className="flex items-center gap-2 bg-[var(--color-brand-card)] backdrop-blur-sm border border-[var(--color-brand-border)] hover:bg-[var(--color-brand-border)] transition-colors px-4 py-2 rounded-lg text-sm font-medium text-[var(--color-brand-text)]">
             <Plus size={16} />
             <span>New Notes</span>
           </Link>
           <button 
             onClick={handleExportCSV}
             disabled={tasks.length === 0}
-            className="flex items-center gap-2 bg-[var(--color-brand-text)] text-white hover:opacity-90 transition-all px-4 py-2 rounded-lg text-sm font-medium shadow-sm disabled:opacity-50"
+            className="flex items-center gap-2 bg-[var(--color-brand-text)] text-[var(--color-brand-bg)] hover:opacity-90 transition-all px-4 py-2 rounded-lg text-sm font-medium shadow-sm disabled:opacity-50"
           >
             <Download size={16} />
             <span>Export CSV</span>
@@ -115,16 +148,54 @@ export default function Tasks() {
       </div>
 
       {tasks.length > 0 && (
-        <FilterBar 
-          owners={owners} 
-          filterOwner={filterOwner} setFilterOwner={setFilterOwner}
-          filterPriority={filterPriority} setFilterPriority={setFilterPriority}
-          filterStatus={filterStatus} setFilterStatus={setFilterStatus}
-        />
+        viewMode === 'list' ? (
+          <FilterBar 
+            owners={owners} 
+            filterOwner={filterOwner} setFilterOwner={setFilterOwner}
+            filterPriority={filterPriority} setFilterPriority={setFilterPriority}
+            filterStatus={filterStatus} setFilterStatus={setFilterStatus}
+            viewMode={viewMode}
+          />
+        ) : (
+          <KanbanFilterBar
+            owners={owners}
+            filterOwner={filterOwner} setFilterOwner={setFilterOwner}
+            filterPriority={filterPriority} setFilterPriority={setFilterPriority}
+            filterStatus={filterStatus} setFilterStatus={setFilterStatus}
+            searchQuery={searchQuery} setSearchQuery={setSearchQuery}
+            filterDate={filterDate} setFilterDate={setFilterDate}
+          />
+        )
       )}
 
       {tasks.length === 0 ? (
         <EmptyState />
+      ) : viewMode === 'kanban' ? (
+        <div className="flex-1 mt-2">
+          <KanbanBoard 
+            tasks={filteredTasks} 
+            onDragEnd={async (result) => {
+              if (!result.destination) return;
+              const { source, destination, draggableId } = result;
+              if (source.droppableId === destination.droppableId) return;
+
+              const taskId = parseInt(draggableId, 10);
+              const newStatus = destination.droppableId;
+              
+              const oldTask = tasks.find(t => t.id === taskId);
+              if (!oldTask) return;
+              
+              setTasks(prev => prev.map(t => t.id === taskId ? { ...t, status: newStatus } : t));
+              try { 
+                await updateTask(taskId, { status: newStatus }); 
+              } catch {
+                setTasks(prev => prev.map(t => t.id === taskId ? { ...t, status: oldTask.status } : t));
+              }
+            }}
+            onEdit={setEditingTask}
+            onDelete={handleDelete}
+          />
+        </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 auto-rows-max">
           <AnimatePresence mode="popLayout">

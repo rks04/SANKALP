@@ -5,9 +5,9 @@ export default function TaskCard({ task, index, onToggleStatus, onEdit, onDelete
   const isCompleted = task.status === 'Completed';
 
   const priorityStyles = {
-    High: { dot: 'bg-[#4A3B32]', text: 'text-[#4A3B32]', bg: 'bg-[#4A3B32]/10' },
-    Medium: { dot: 'bg-[#8B7355]', text: 'text-[#8B7355]', bg: 'bg-[#8B7355]/10' },
-    Low: { dot: 'bg-[#B09983]', text: 'text-[#B09983]', bg: 'bg-[#B09983]/10' },
+    High: { bg: 'bg-[#4A3B32]', text: 'text-[#EBE5D9]' },
+    Medium: { bg: 'bg-[#8B7355]', text: 'text-[#EBE5D9]' },
+    Low: { bg: 'bg-[#D4C4B7]', text: 'text-[#3D352F]' },
   };
 
   const pStyle = priorityStyles[task.priority] || priorityStyles.Medium;
@@ -26,9 +26,19 @@ export default function TaskCard({ task, index, onToggleStatus, onEdit, onDelete
     >
       {/* Top row: Priority and Actions */}
       <div className="flex justify-between items-center">
-        <div className={`px-2.5 py-1 rounded-full text-xs font-bold tracking-wide uppercase flex items-center gap-1.5 ${pStyle.bg} ${pStyle.text}`}>
-          <span className={`w-1.5 h-1.5 rounded-full ${pStyle.dot}`}></span>
-          {task.priority}
+        <div className="flex items-center gap-3">
+          <div className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase ${pStyle.bg} ${pStyle.text}`}>
+            {task.priority}
+          </div>
+          
+          <div className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase border ${
+            task.status === 'Completed' ? 'bg-[var(--color-brand-secondary)]/10 text-[var(--color-brand-secondary)] border-[var(--color-brand-secondary)]/20' :
+            task.status === 'In Progress' ? 'bg-[var(--color-brand-border)]/50 text-[var(--color-brand-text)] border-[var(--color-brand-border)]' :
+            task.status === 'Cancelled' ? 'bg-black/5 dark:bg-white/5 text-[var(--color-brand-secondary)] border-transparent opacity-70' :
+            'bg-[#4A3B32]/5 dark:bg-[#EBE5D9]/5 text-[#7A6A5E] dark:text-[#B09983] border-[#4A3B32]/10 dark:border-[#EBE5D9]/10'
+          }`}>
+            {task.status}
+          </div>
         </div>
         
         <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -72,9 +82,9 @@ export default function TaskCard({ task, index, onToggleStatus, onEdit, onDelete
       </div>
 
       {/* Meta info: Owner and Date */}
-      <div className="flex flex-wrap items-center justify-between mt-auto pt-4 border-t border-[var(--color-brand-border)]/50 text-xs font-semibold text-[var(--color-brand-secondary)]">
+      <div className="flex flex-wrap items-center justify-between mt-auto pt-4 border-t border-[var(--color-brand-border)] text-xs font-semibold text-[var(--color-brand-secondary)]">
         {task.owner ? (
-          <div className="flex items-center gap-1.5 text-[var(--color-brand-primary)] bg-[var(--color-brand-primary)]/5 px-2 py-1 rounded-md">
+          <div className="flex items-center gap-1.5 text-[var(--color-brand-text)] bg-[var(--color-brand-border)]/50 px-2.5 py-1.5 rounded-md">
             <User size={13} />
             <span>{task.owner}</span>
           </div>
@@ -86,7 +96,7 @@ export default function TaskCard({ task, index, onToggleStatus, onEdit, onDelete
         )}
         
         {task.due_date ? (
-          <div className="flex items-center gap-1.5 bg-black/5 px-2 py-1 rounded-md">
+          <div className="flex items-center gap-1.5 bg-[var(--color-brand-border)]/30 text-[var(--color-brand-secondary)] px-2.5 py-1.5 rounded-md">
             <Calendar size={13} />
             <span>{task.due_date}</span>
           </div>

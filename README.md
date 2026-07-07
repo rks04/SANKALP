@@ -15,6 +15,19 @@
 - `/frontend`: React application built with Vite and Tailwind CSS v4. Features a premium, glassmorphic UI.
 - `/backend`: FastAPI application powered by Python and Google's Gemini AI. 
 
+## Tech Stack
+**Frontend:**
+- React (UI Framework)
+- Vite (Build Tool)
+- Tailwind CSS (Styling)
+- Hello Pangea DnD (Drag and Drop)
+
+**Backend:**
+- Python
+- FastAPI (Web Framework)
+- **SQLite (Database)**
+- Google Gemini AI (LLM)
+
 ## Getting Started
 See the individual READMEs for detailed setup instructions:
 - [Frontend README](./frontend/README.md)

@@ -46,7 +46,7 @@ export default function MeetingInput({ onGenerate, isGenerating }) {
         <button
           type="submit"
           disabled={!notes.trim() || isGenerating}
-          className="self-end bg-[var(--color-brand-text)] hover:opacity-90 text-white px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 shadow-md"
+          className="self-end bg-[var(--color-brand-text)] hover:opacity-90 text-[var(--color-brand-bg)] px-6 py-3 rounded-xl font-medium flex items-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 shadow-md"
         >
           {isGenerating ? (
             <>
