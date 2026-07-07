@@ -11,6 +11,8 @@ import { getTasks, updateTask, deleteTask, exportToCSV } from '../services/api';
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   
   const [filterOwner, setFilterOwner] = useState('All');
   const [filterPriority, setFilterPriority] = useState('All');
@@ -20,12 +22,14 @@ export default function Tasks() {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [page]);
 
   const fetchTasks = async () => {
+    setLoading(true);
     try {
-      const data = await getTasks();
-      setTasks(data);
+      const data = await getTasks(page, 10);
+      setTasks(data.items || []);
+      setTotalPages(data.total_pages || 1);
     } catch (err) {
       console.error('Failed to fetch tasks:', err);
     } finally {
@@ -143,6 +147,28 @@ export default function Tasks() {
               No tasks match the selected filters.
             </motion.div>
           )}
+        </div>
+      )}
+
+      {tasks.length > 0 && totalPages > 1 && (
+        <div className="flex justify-center items-center gap-4 mt-8 pb-8">
+          <button 
+            onClick={() => setPage(p => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="px-4 py-2 bg-[var(--color-brand-card)] text-[var(--color-brand-text)] border border-[var(--color-brand-border)] hover:bg-[var(--color-brand-bg)] rounded-lg font-medium text-sm disabled:opacity-50 transition-colors shadow-sm"
+          >
+            Previous
+          </button>
+          <span className="text-sm font-bold text-[var(--color-brand-secondary)]">
+            Page {page} of {totalPages}
+          </span>
+          <button 
+            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="px-4 py-2 bg-[var(--color-brand-card)] text-[var(--color-brand-text)] border border-[var(--color-brand-border)] hover:bg-[var(--color-brand-bg)] rounded-lg font-medium text-sm disabled:opacity-50 transition-colors shadow-sm"
+          >
+            Next
+          </button>
         </div>
       )}
 

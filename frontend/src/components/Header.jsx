@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
   return (
@@ -17,8 +18,8 @@ export default function Header() {
           </div>
           <h1 className="text-xl font-elegant font-semibold uppercase text-[var(--color-brand-text)] tracking-widest">SANKALP</h1>
         </Link>
-        <div className="text-xs font-semibold uppercase tracking-widest text-[var(--color-brand-secondary)] hidden sm:block">
-          Workspace
+        <div className="hidden sm:block">
+          <ThemeToggle />
         </div>
       </motion.header>
     </div>

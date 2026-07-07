@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Papa from 'papaparse';
 
-const API_URL = 'http://127.0.0.1:8000/api';
+const API_URL = `http://${window.location.hostname}:8000/api`;
 
 const api = axios.create({
   baseURL: API_URL,
@@ -12,8 +12,8 @@ export const generateTasks = async (notes) => {
   return response.data;
 };
 
-export const getTasks = async () => {
-  const response = await api.get('/tasks');
+export const getTasks = async (page = 1, size = 10) => {
+  const response = await api.get(`/tasks?page=${page}&size=${size}`);
   return response.data;
 };
 

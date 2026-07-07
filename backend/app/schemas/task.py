@@ -31,3 +31,10 @@ class GeminiResponse(BaseModel):
 
 class GenerateRequest(BaseModel):
     notes: str
+
+class PaginatedTaskResponse(BaseModel):
+    items: List[TaskResponse]
+    total: int
+    page: int
+    size: int
+    total_pages: int

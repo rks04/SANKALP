@@ -3,19 +3,40 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-bg: #EBE5D9;
-  --color-brand-primary: #D4C4B7;
-  --color-brand-accent: #FFF3D8;
-  --color-brand-card: rgba(235, 229, 217, 0.6);
-  --color-brand-border: rgba(255, 243, 216, 0.5);
-  --color-brand-text: #3D352F;
-  --color-brand-secondary: #7A6A5E;
-  --color-brand-success: #10B981;
-  --color-brand-warning: #F59E0B;
-  --color-brand-danger: #EF4444;
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-card: var(--brand-card);
+  --color-brand-border: var(--brand-border);
+  --color-brand-text: var(--brand-text);
+  --color-brand-secondary: var(--brand-secondary);
 }
 
 @layer base {
+  :root {
+    --brand-bg: #EBE5D9;
+    --brand-primary: #D4C4B7;
+    --brand-accent: #FFF3D8;
+    --brand-card: rgba(235, 229, 217, 0.6);
+    --brand-border: rgba(255, 243, 216, 0.5);
+    --brand-text: #3D352F;
+    --brand-secondary: #7A6A5E;
+    --shadow-light: rgba(255,255,255,0.7);
+    --shadow-dark: rgba(0,0,0,0.06);
+  }
+  
+  .dark {
+    --brand-bg: #2C2825;
+    --brand-primary: #4A423C;
+    --brand-accent: #E8C59A;
+    --brand-card: rgba(44, 40, 37, 0.6);
+    --brand-border: rgba(74, 66, 60, 0.5);
+    --brand-text: #EBE5D9;
+    --brand-secondary: #9E8C7F;
+    --shadow-light: rgba(60, 55, 51, 0.5);
+    --shadow-dark: rgba(0,0,0,0.4);
+  }
+  
   body {
     background-color: var(--color-brand-bg);
     color: var(--color-brand-text);
@@ -59,9 +80,10 @@
   .eclipse-input {
     background-color: var(--color-brand-bg);
     border: none;
+    /* Light mode: inset shadow for recessed effect */
     box-shadow: 
-      -8px -8px 16px rgba(255,255,255,0.7), 
-      8px 8px 16px rgba(0,0,0,0.06),
+      inset 6px 6px 12px var(--shadow-dark),
+      inset -6px -6px 12px var(--shadow-light),
       0 0 0 rgba(232, 197, 154, 0);
     transition: box-shadow 0.7s ease, transform 0.7s ease;
   }
@@ -69,8 +91,25 @@
   .eclipse-input:hover,
   .eclipse-input:focus {
     box-shadow: 
-      -8px -8px 16px rgba(255,255,255,0.7), 
-      8px 8px 16px rgba(0,0,0,0.06),
+      inset 6px 6px 12px var(--shadow-dark),
+      inset -6px -6px 12px var(--shadow-light),
+      0 0 30px 5px rgba(232, 197, 154, 0.4);
+    outline: none;
+  }
+
+  .dark .eclipse-input {
+    /* Dark mode: outer shadow */
+    box-shadow: 
+      -8px -8px 16px var(--shadow-light), 
+      8px 8px 16px var(--shadow-dark),
+      0 0 0 rgba(232, 197, 154, 0);
+  }
+
+  .dark .eclipse-input:hover,
+  .dark .eclipse-input:focus {
+    box-shadow: 
+      -8px -8px 16px var(--shadow-light), 
+      8px 8px 16px var(--shadow-dark),
       0 0 30px 5px rgba(232, 197, 154, 0.4);
     outline: none;
   }

@@ -36,7 +36,7 @@ export default function MeetingInput({ onGenerate, isGenerating }) {
               id="notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="e.g. Riya will complete the login UI by Friday. Jay will integrate authentication..."
+              placeholder="What's your team discussed today?"
               className="w-full h-48 sm:h-64 eclipse-input rounded-3xl p-6 text-base resize-none relative z-10 placeholder:text-[var(--color-brand-secondary)]/50 text-[var(--color-brand-text)]"
               disabled={isGenerating}
             />
