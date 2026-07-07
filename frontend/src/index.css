@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #F7F8FC;
+  --color-brand-primary: #6366F1;
+  --color-brand-accent: #8B5CF6;
+  --color-brand-card: rgba(255, 255, 255, 0.75);
+  --color-brand-border: rgba(255, 255, 255, 0.45);
+  --color-brand-text: #0F172A; /* Deeper for better contrast */
+  --color-brand-secondary: #475569; /* Clearer for better contrast */
+  --color-brand-success: #10B981;
+  --color-brand-warning: #F59E0B;
+  --color-brand-danger: #EF4444;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-bg);
+    color: var(--color-brand-text);
+    font-family: 'Outfit', system-ui, sans-serif;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: var(--color-brand-card);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--color-brand-border);
+    box-shadow: 
+      0 20px 40px -20px rgba(0,0,0,0.05),
+      0 0 10px rgba(255,255,255,0.2) inset;
+  }
+  
+  .glass-input {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-brand-border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) inset;
+  }
+}
